@@ -37,6 +37,7 @@ dependencies:
   dio:
   rxdart:
   google_fonts: ^2.0.0
+  dio_http_cache: ^0.3.0
 
 dev_dependencies:
   flutter_test:
