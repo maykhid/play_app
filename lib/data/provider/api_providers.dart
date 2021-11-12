@@ -15,10 +15,12 @@ class ApiProvider {
         ApiConstants.playersPath,
         RequestType.GET,
       );
-      final value = playersResponseFromJson(response);
+      final value = playersResponseFromJson(response.toString());
+      print('Response: $response');
       completer.complete(value);
-    } catch (e) {
-      completer.completeError(e);
+    } catch (e, stackTrace) {
+      completer.completeError(e, stackTrace);
+      print(e);
     }
     return completer.future;
   }

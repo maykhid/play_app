@@ -29,14 +29,16 @@ class NetworkManager {
         case RequestType.GET:
           var response = await client.get(
             url,
-            options:
-                buildCacheOptions(const Duration(days: 1), forceRefresh: true),
+            // options:
+            //     buildCacheOptions(const Duration(days: 1), forceRefresh: true),
           );
-          mainResponse = response.data;
+          mainResponse = response;
+          // print('Response: ${mainResponse.toString()}');
           break;
         case RequestType.POST:
           break;
       }
+      // print('Response: ${mainResponse.toString()}');
       return mainResponse;
     } on TimeoutException catch (e) {
       print("Network Timeout Error response: $e");
@@ -64,8 +66,8 @@ class NetworkManager {
       } else {
         throw ("Network Unknown response");
       }
-    } catch (e) {
-      print("Internal Error response: $e");
+    } catch (e, stackTrace) {
+      print("Internal Error response: $e, StackTrace: $stackTrace");
       throw ("An error occurred while processing this request");
     }
   }
