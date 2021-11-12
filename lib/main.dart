@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
+import 'package:play_app/ui/main/tab-xl/screens/tab_player_screen.dart';
 
 import 'app/app_constants/color_const.dart';
-import 'ui/main/mobile-m/screens/mobile_page.dart';
-import 'ui/main/tab-xl/screens/tab_page.dart';
+import 'ui/main/mobile-m/screens/mobile_home_page.dart';
+import 'ui/main/tab-xl/screens/tab_home_page.dart';
 
 void main() {
   runApp(const PlayApp());
@@ -55,7 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Teams',
                   style: TextStyle(color: AppColors.black, fontWeight: FontWeight.bold)),
             ),
-            body: const TabXlPage(),
+            // body: const TabXlPage(),
+            body: const PlayerScreenXl(),
           );
         }
       },
