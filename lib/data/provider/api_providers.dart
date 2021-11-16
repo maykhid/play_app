@@ -16,7 +16,7 @@ class ApiProvider {
         RequestType.GET,
       );
       final value = playersResponseFromJson(response.toString());
-      print('Response: $response');
+      // print('Response: $response');
       completer.complete(value);
     } catch (e, stackTrace) {
       completer.completeError(e, stackTrace);

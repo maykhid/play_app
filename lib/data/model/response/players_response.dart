@@ -8,6 +8,8 @@ import 'dart:convert';
 PlayersResponse playersResponseFromJson(String str) =>
     PlayersResponse.fromJson(json.decode(str));
 
+    String playersResponseToJson(PlayersResponse data) => json.encode(data.toJson());
+
 class PlayersResponse {
   PlayersResponse({
        this.players,
@@ -23,6 +25,11 @@ class PlayersResponse {
             List<Player>.from(json["players"].map((x) => Player.fromJson(x))),
         meta: Meta.fromJson(json["meta"]),
       );
+
+      Map<String, dynamic> toJson() => {
+        "players": List<dynamic>.from(players!.map((x) => x.toJson())),
+        "meta": meta!.toJson(),
+    };
 }
 
 class Meta {
@@ -35,6 +42,10 @@ class Meta {
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
         total: json["total"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "total": total,
+    };
 }
 
 class Player {
@@ -172,7 +183,51 @@ class Player {
         profileImage: Image.fromJson(json["profile_image"]),
         miscImage: Image.fromJson(json["misc_image"]),
       );
+
+       Map<String, dynamic> toJson() => {
+        "id": id,
+        "first_name": firstName,
+        "last_name": lastName,
+        "team_name": teamName,
+        "position": position,
+        "position_id": positionId,
+        "position_abbreviation": positionAbbreviation,
+        "price": price,
+        "current_price_change_info": currentPriceChangeInfo!.toJson(),
+        "status": status,
+        "injured": injured,
+        "injury_type": injuryType,
+        "banned": banned,
+        "ban_type": banType,
+        "streak_events_progress": streakEventsProgress!.toJson(),
+        "chance_of_playing": chanceOfPlaying,
+        "team_abbreviation": teamAbbreviation,
+        "weekly_price_change": weeklyPriceChange,
+        "weekly_price_change_percentage": weeklyPriceChangePercentage,
+        "team_id": teamId,
+        "headshot": headshot!.toJson(),
+        "known_name": knownName ?? null,
+        "jersey_image": jerseyImage!.toJson(),
+        "score": score,
+        "humanize_status": humanizeStatus,
+        "shirt_number": shirtNumber ?? null,
+        "country": country ?? null,
+        "is_constructor": isConstructor,
+        "season_score": seasonScore,
+        "driver_data": driverData == null ? null : driverData!.toJson(),
+        "constructor_data": constructorData == null ? null : constructorData!.toJson(),
+        "born_at": bornAt == null ? null : "${bornAt!.year.toString().padLeft(4, '0')}-${bornAt!.month.toString().padLeft(2, '0')}-${bornAt!.day.toString().padLeft(2, '0')}",
+        "season_prices": List<dynamic>.from(seasonPrices!.map((x) => x.toJson())),
+        "num_fixtures_in_gameweek": numFixturesInGameweek,
+        "deleted_in_feed": deletedInFeed,
+        "has_fixture": hasFixture,
+        "display_name": displayName,
+        "external_id": externalId,
+        "profile_image": profileImage!.toJson(),
+        "misc_image": miscImage!.toJson(),
+    };
 }
+
 
 class ConstructorData {
   ConstructorData({
@@ -215,6 +270,20 @@ class ConstructorData {
         country: json["country"],
         highestRaceFinished: json["highest_race_finished"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "best_finish": bestFinish,
+        "best_finish_count": bestFinishCount,
+        "best_grid": bestGrid,
+        "best_grid_count": bestGridCount,
+        "titles": titles,
+        "championship_points": championshipPoints,
+        "first_season": firstSeason,
+        "poles": poles,
+        "fastest_laps": fastestLaps,
+        "country": country,
+        "highest_race_finished": highestRaceFinished,
+    };
 }
 
 class CurrentPriceChangeInfo {
@@ -235,6 +304,12 @@ class CurrentPriceChangeInfo {
         probabilityPriceDownPercentage:
             json["probability_price_down_percentage"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "current_selection_percentage": currentSelectionPercentage,
+        "probability_price_up_percentage": probabilityPriceUpPercentage,
+        "probability_price_down_percentage": probabilityPriceDownPercentage,
+    };
 }
 
 class DriverData {
@@ -283,6 +358,22 @@ class DriverData {
         highestRaceFinished: json["highest_race_finished"],
         placeOfBirth: json["place_of_birth"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "wins": wins,
+        "podiums": podiums,
+        "poles": poles,
+        "fastest_laps": fastestLaps,
+        "grands_prix_entered": grandsPrixEntered,
+        "titles": titles,
+        "championship_points": championshipPoints,
+        "best_finish": bestFinish,
+        "best_finish_count": bestFinishCount,
+        "best_grid": bestGrid,
+        "best_grid_count": bestGridCount,
+        "highest_race_finished": highestRaceFinished,
+        "place_of_birth": placeOfBirth,
+    };
 }
 
 class Headshot {
@@ -301,6 +392,12 @@ class Headshot {
         pitchView: json["pitch_view"],
         playerList: json["player_list"],
       );
+
+      Map<String, dynamic> toJson() => {
+        "profile": profile,
+        "pitch_view": pitchView,
+        "player_list": playerList,
+    };
 }
 
 class Image {
@@ -314,7 +411,11 @@ class Image {
         url: json["url"] ?? '',
       );
 
+  Map<String, dynamic> toJson() => {
+        "url": url == null ? null : url,
+    };
 }
+
 
 class SeasonPrice {
   SeasonPrice({
@@ -329,6 +430,11 @@ class SeasonPrice {
         gamePeriodId: json["game_period_id"],
         price: json["price"].toDouble(),
       );
+
+  Map<String, dynamic> toJson() => {
+        "game_period_id": gamePeriodId,
+        "price": price,
+    };
 }
 
 class StreakEventsProgress {
@@ -336,4 +442,8 @@ class StreakEventsProgress {
 
   factory StreakEventsProgress.fromJson(Map<String, dynamic> json) =>
       StreakEventsProgress();
+
+  Map<String, dynamic> toJson() => {
+    };
 }
+

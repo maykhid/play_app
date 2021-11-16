@@ -3,10 +3,12 @@ import 'package:layout/layout.dart';
 import 'package:play_app/ui/main/tab-xl/screens/tab_player_screen.dart';
 
 import 'app/app_constants/color_const.dart';
+import 'app/service_locator.dart';
 import 'ui/main/mobile-m/screens/mobile_home_page.dart';
 import 'ui/main/tab-xl/screens/tab_home_page.dart';
 
-void main() {
+Future<void> main() async {
+  await setupLocator();
   runApp(const PlayApp());
 }
 
@@ -56,8 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Teams',
                   style: TextStyle(color: AppColors.black, fontWeight: FontWeight.bold)),
             ),
-            // body: const TabXlPage(),
-            body: const PlayerScreenXl(),
+            body: const TabXlPage(),
+            // body: const PlayerScreenXl(),
           );
         }
       },

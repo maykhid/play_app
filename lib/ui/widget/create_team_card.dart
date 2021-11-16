@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:play_app/app/app_constants/color_const.dart';
+import 'package:play_app/ui/blocs/create_team_bloc.dart';
 
-class CreateTeamCard extends StatelessWidget {
+class CreateTeamCard extends StatefulWidget {
   const CreateTeamCard({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<CreateTeamCard> createState() => _CreateTeamCardState();
+}
+
+class _CreateTeamCardState extends State<CreateTeamCard> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _bloc.generateRandomTeam();
+  }
+
+  final _bloc = CreateTeamBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +39,11 @@ class CreateTeamCard extends StatelessWidget {
             color: AppColors.green,
             borderRadius: BorderRadius.all(Radius.circular(4)),
           ),
-          child: const Center(child: Text('Create Team', style: TextStyle(color: AppColors.white),)),
+          child: const Center(
+              child: Text(
+            'Create Team',
+            style: TextStyle(color: AppColors.white),
+          )),
         ),
       ),
     );
