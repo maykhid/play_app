@@ -107,7 +107,7 @@ class Player {
   bool? banned;
   dynamic banType;
   StreakEventsProgress? streakEventsProgress;
-  int? chanceOfPlaying;
+  double? chanceOfPlaying;
   String? teamAbbreviation;
   double? weeklyPriceChange;
   int? weeklyPriceChangePercentage;
@@ -120,7 +120,7 @@ class Player {
   int? shirtNumber;
   String? country;
   bool? isConstructor;
-  int? seasonScore;
+  double? seasonScore;
   DriverData? driverData;
   ConstructorData? constructorData;
   DateTime? bornAt;
@@ -157,12 +157,12 @@ class Player {
         weeklyPriceChangePercentage: json["weekly_price_change_percentage"],
         teamId: json["team_id"],
         headshot: Headshot.fromJson(json["headshot"]),
-        knownName: json["known_name"] ?? null,
+        knownName: json["known_name"] ?? '',
         jerseyImage: Image.fromJson(json["jersey_image"]),
         score: json["score"],
         humanizeStatus: json["humanize_status"],
-        shirtNumber: json["shirt_number"] ?? null,
-        country: json["country"] ?? null,
+        shirtNumber: json["shirt_number"] ?? 0,
+        country: json["country"] ?? '',
         isConstructor: json["is_constructor"],
         seasonScore: json["season_score"],
         driverData: json["driver_data"] == null
@@ -206,12 +206,12 @@ class Player {
         "weekly_price_change_percentage": weeklyPriceChangePercentage,
         "team_id": teamId,
         "headshot": headshot!.toJson(),
-        "known_name": knownName ?? null,
+        "known_name": knownName ?? '',
         "jersey_image": jerseyImage!.toJson(),
         "score": score,
         "humanize_status": humanizeStatus,
-        "shirt_number": shirtNumber ?? null,
-        "country": country ?? null,
+        "shirt_number": shirtNumber ?? 0,
+        "country": country ?? '',
         "is_constructor": isConstructor,
         "season_score": seasonScore,
         "driver_data": driverData == null ? null : driverData!.toJson(),
@@ -412,7 +412,7 @@ class Image {
       );
 
   Map<String, dynamic> toJson() => {
-        "url": url == null ? null : url,
+        "url": url ?? '',
     };
 }
 

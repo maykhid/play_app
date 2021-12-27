@@ -48,10 +48,12 @@ class PlayerDatabase extends _$PlayerDatabase {
   //   });
   // }
 
-  Future insertTeam(TeamsCompanion entry) {
+  Future<String> insertTeam(TeamsCompanion entry) async {
     try {
-      print('Storing in db...');
-      return into(teams).insert(entry);
+      print('Storing players in db...');
+      await into(teams).insert(entry);
+      print('Team created!');
+      return 'Team created!';
     } catch (e, stackTrace) {
       throw Exception("Insert Exception: $e -- Stack Trace: $stackTrace");
     }

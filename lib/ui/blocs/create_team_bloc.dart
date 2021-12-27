@@ -14,12 +14,13 @@ class CreateTeamBloc extends Bloc {
   Stream<bool> get progressStatusStream => _showProgressSubject.stream;
   Function(bool) get showProgressBar => _showProgressSubject.sink.add;
 
-  final _createTeamSubject = PublishSubject<Team>();
+  final _createTeamSubject = PublishSubject<String>();
+  Stream<String> get createTeamStream => _createTeamSubject.stream;
 
   // create random team
 
   List<int> _generate30nums() {
-    print('generating numbers...');
+    // print('generating numbers...');
     List<int> nums = [];
     for (int i = 0; i < 30; i++) {
       nums.add(i);
@@ -27,14 +28,12 @@ class CreateTeamBloc extends Bloc {
     return nums;
   }
 
-  generateRandomTeam() async {
+  Future<List<Player>?> _generateRandomTeam() async {
     print('generating team...');
     late List<Player>? players = [];
     int isDriverCount = 0;
     int isConstructorCount = 0;
-    List<Player>? tempList = [];
-
-   
+    List<Player>? generatedTeam = [];
 
     // get list of players from api
     await _repo.getPlayers().then((response) async {
@@ -53,32 +52,46 @@ class CreateTeamBloc extends Bloc {
       var player = players![random[i]];
 
       if (!player.isConstructor!) {
-        if (isDriverCount <= 5 && (tempList.length < 6 && isDriverCount < 5)) {
-          tempList.add(player);
+        if (isDriverCount <= 5 && (generatedTeam.length < 6 && isDriverCount < 5)) {
+          generatedTeam.add(player);
         }
         isDriverCount++;
       } else if (player.isConstructor! &&
-          (isConstructorCount < 1 && tempList.length < 6)) {
-        tempList.add(player);
+          (isConstructorCount < 1 && generatedTeam.length < 6)) {
+        generatedTeam.add(player);
         isConstructorCount++;
       }
     }
     print(
-        'List of players: ${tempList[0].isConstructor}, ${tempList[1].isConstructor}, ${tempList[2].isConstructor}, ${tempList[3].isConstructor}, ${tempList[4].isConstructor}, ${tempList[5].isConstructor}');
-
-         final team = TeamsCompanion(teamName: const Value('test'), players: Value(TeamPlayerModel(players: tempList)));
-
-    // PlayerDatabase? db;
-    // db!.insertTeam(team);
-    // print("Team: $team");
-    await locator<PlayerDatabase>().insertTeam(team);
+        'List of players: ${generatedTeam[0].isConstructor}, ${generatedTeam[1].isConstructor}, ${generatedTeam[2].isConstructor}, ${generatedTeam[3].isConstructor}, ${generatedTeam[4].isConstructor}, ${generatedTeam[5].isConstructor}');
+    return generatedTeam;
   }
 
+  createTeam() async {
+    _showProgressSubject.sink.add(true);
+    final team = TeamsCompanion(
+      teamName: const Value('test'),
+      players: Value(
+        TeamPlayerModel(players: await _generateRandomTeam()),
+      ),
+    );
 
+    locator<PlayerDatabase>().insertTeam(team).then((response) async {
+      _showProgressSubject.sink.add(false);
+      _createTeamSubject.sink.add(response);
+    }, onError: (e) {
+      _showProgressSubject.sink.add(false);
+      _createTeamSubject.sink.addError(e);
+    });
+  }
 
   @override
-  void dispose() {
-    // TODO: implement dispose
+  Future<void> dispose() async {
+    _showProgressSubject.drain();
+    await _showProgressSubject.close();
+
+    _createTeamSubject.drain();
+    await _createTeamSubject.close();
   }
 
   @override
