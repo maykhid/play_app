@@ -102,8 +102,8 @@ class _MobilePageState extends State<MobilePage> {
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              children: [
-                CreateTeamCard(isXl: widget.isXl),
+              children: const [
+               Center(child: CircularProgressIndicator(color: AppColors.green)),
               ],
             ),
           );

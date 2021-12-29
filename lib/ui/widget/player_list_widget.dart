@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
 import 'package:play_app/app/app_constants/color_const.dart';
 import 'package:play_app/app/app_dimens.dart';
 import 'package:play_app/data/model/response/players_response.dart' as response;
@@ -28,7 +29,8 @@ class PlayerListWidget extends StatelessWidget {
           children: [
             // circle avatar
             CircleAvatar(
-              child: Image.network(_player.profileImage!.url.toString(), fit: BoxFit.contain),
+              child: Image.network(_player.profileImage!.url.toString(),
+                  fit: BoxFit.contain),
             ),
 
             // fav icon
@@ -147,7 +149,9 @@ class PlayerListWidget extends StatelessWidget {
             Container(
               width: 50,
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.greyBg,),
+                border: Border.all(
+                  color: AppColors.greyBg,
+                ),
                 borderRadius: BorderRadius.circular(6),
               ),
               child: Image.asset('assets/icons/plus-icon.png'),
@@ -165,19 +169,31 @@ class QRwidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 35,
-      // height: 10,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(letter),
-          Container(
-            width: 20,
-            height: 10,
-            color: AppColors.greyBg,
-          ),
-        ],
+    // final double fontSize =
+    //     context.layout.value(xs: 20.0, sm: 20.0, md: 20.0, lg: 20.0, xl: 20.0);
+    bool isXl = context.layout.breakpoint < LayoutBreakpoint.sm;
+    return Layout(
+      child: SizedBox(
+        
+        width: 50,
+        // height: 10,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              letter,
+              style: TextStyle(fontSize: isXl ? 18 : 10),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 1.0),
+              child: Container(
+                width: isXl ? 35 : 20,
+                height: isXl ? 15 : 10,
+                color: AppColors.greyBg,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
